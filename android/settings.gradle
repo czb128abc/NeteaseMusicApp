@@ -1,0 +1,3 @@
+rootProject.name = 'NeteaseMusicApp'
+
+include ':app'
