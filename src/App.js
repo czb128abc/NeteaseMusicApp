@@ -7,11 +7,11 @@ const TabBarItem = TabBar.Item;
 const tabBarMap = {
   key_0: {
     title: '发现音乐',
-    content: '音乐sdfsd',
+    content: '音乐',
   },
   key_1: {
     title: '音乐',
-    content: '我的音乐sdfsd',
+    content: '我的音乐',
   },
 };
 

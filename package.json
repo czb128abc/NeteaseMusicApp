@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "ios": "react-native run-ios --simulator 'iPhone 8'",
-    "test": "jest"
+    "test": "jest",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "antd-mobile-rn": "^2.3.0",
@@ -22,6 +23,7 @@
     "babel-plugin-import": "^1.10.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
+    "react-devtools": "^3.4.2",
     "react-test-renderer": "16.6.0-alpha.8af6728"
   },
   "jest": {
