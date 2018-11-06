@@ -7,6 +7,7 @@ export { connect };
 
 export default function(options) {
   const app = create(options);
+  console.log(options);
   if (!global.registered) options.models.forEach(model => app.model(model)); // 如果注册过 model 则不需再次注册
   global.registered = true; // 注：golbal 为react native 全局变量   类似 window
 

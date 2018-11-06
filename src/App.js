@@ -1,25 +1,29 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { TabBar } from 'antd-mobile-rn';
+import { NativeRouter, Route } from 'react-router-native';
+import { MusicPlaylistPage } from './pages';
 
 const TabBarItem = TabBar.Item;
 
 const tabBarMap = {
   key_0: {
-    title: '发现音乐',
+    title: '推荐音乐',
     content: '音乐',
+    path: '/music-playlist',
+    component: MusicPlaylistPage,
   },
-  key_1: {
-    title: '音乐',
-    content: '我的音乐',
-  },
+  // key_1: {
+  //   title: '我的音乐',
+  //   content: '我的音乐',
+  // },
 };
-
-export default class AppView extends React.PureComponent {
+type Props = {};
+export default class AppView extends React.PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      tabBarSelectedKey: 'key_1',
+      tabBarSelectedKey: 'key_0',
     };
   }
   tabBarIsSelected(key) {
@@ -30,20 +34,35 @@ export default class AppView extends React.PureComponent {
   }
   render() {
     return (
-      <TabBar unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="white">
-        {Object.keys(tabBarMap).map(item => {
-          return (
-            <TabBarItem
-              title={tabBarMap[item].title}
-              key={item}
-              selected={this.tabBarIsSelected(item)}
-              onPress={() => this.handleTabBarPress(item)}
-            >
-              <Text>{tabBarMap[item].content}</Text>
-            </TabBarItem>
-          );
-        })}
-      </TabBar>
+      <NativeRouter>
+        <TabBar
+          unselectedTintColor="#949494"
+          tintColor="#33A3F4"
+          barTintColor="white"
+          style={style.rootContainer}
+        >
+          {Object.keys(tabBarMap).map(item => {
+            const obj = tabBarMap[item];
+            const Com = obj.component;
+            return (
+              <TabBarItem
+                title={obj.title}
+                key={item}
+                selected={this.tabBarIsSelected(item)}
+                onPress={() => this.handleTabBarPress(item)}
+              >
+                {obj.path ? <Route path={item.path} component={Com} /> : <Text>{obj.content}</Text>}
+              </TabBarItem>
+            );
+          })}
+        </TabBar>
+      </NativeRouter>
     );
   }
 }
+
+const style = StyleSheet.create({
+  rootContainer: {
+    marginTop: 25,
+  },
+});

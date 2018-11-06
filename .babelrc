@@ -6,6 +6,8 @@
       {
         "libraryName": "antd-mobile-rn"
       }
-    ]
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }]
   ]
 }
