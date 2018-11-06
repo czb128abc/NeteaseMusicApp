@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
-import { Grid } from 'antd-mobile-rn';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Grid, Modal, WingBlank, Flex } from 'antd-mobile-rn';
 import { connect } from '../../dva';
 
 @connect(state => {
@@ -10,6 +11,12 @@ import { connect } from '../../dva';
   };
 })
 export default class MusicPlaylistPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+  }
   componentDidMount() {
     const { dispatch } = this.props;
     console.log('componentDidMount');
@@ -18,6 +25,10 @@ export default class MusicPlaylistPage extends React.PureComponent {
       payload: {},
     });
   }
+
+  handleGridItemClick = () => {
+    this.setState({ visible: true });
+  };
   rendGridItem = (el, index) => {
     return (
       <View style={style.gridItemContainer} key={index.toString()}>
@@ -30,14 +41,48 @@ export default class MusicPlaylistPage extends React.PureComponent {
       </View>
     );
   };
+
+  rendDetailModal() {
+    const { visible } = this.state;
+    return (
+      <Modal
+        visible={visible}
+        onClose={() => this.setState({ visible: false })}
+        animationType="slide"
+        closable
+      >
+        <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
+          <WingBlank size="sm">
+            <Flex justify="start" onPress={()=> this.setState({visible: false})}>
+              <Flex.Item style={{flex: 0}}>
+                <Icon name="ios-arrow-back" size={16} />
+              </Flex.Item>
+              <Flex.Item style={{paddingHorizontal: 8}}>
+                <Text style={{fontSize: 16}}>detail</Text>
+              </Flex.Item>
+            </Flex>
+          </WingBlank>
+
+          <Text style={{ textAlign: 'center' }}>detail</Text>
+        </View>
+      </Modal>
+    );
+  }
+
   render() {
     const { topPayList } = this.props;
     const gridData = topPayList.map(item => ({ icon: item.coverImgUrl, text: item.name }));
     return (
       <View style={style.container}>
         <ScrollView>
-          <Grid data={gridData} columnNum={2} renderItem={this.rendGridItem} />
+          <Grid
+            data={gridData}
+            columnNum={2}
+            renderItem={this.rendGridItem}
+            onClick={this.handleGridItemClick}
+          />
         </ScrollView>
+        {this.rendDetailModal()}
       </View>
     );
   }
