@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Grid, Modal, WingBlank, Flex } from 'antd-mobile-rn';
+import { Grid, Modal, WingBlank, Flex, List } from 'antd-mobile-rn';
 import { connect } from '../../dva';
 
 @connect(state => {
@@ -26,8 +26,16 @@ export default class MusicPlaylistPage extends React.PureComponent {
     });
   }
 
-  handleGridItemClick = () => {
+  handleGridItemClick = el => {
+    const { dispatch } = this.props;
+    const { id } = el;
     this.setState({ visible: true });
+    dispatch({
+      type: 'musicPlaylist/queryTopPayDetail',
+      payload: {
+        id,
+      },
+    });
   };
   rendGridItem = (el, index) => {
     return (
@@ -44,6 +52,7 @@ export default class MusicPlaylistPage extends React.PureComponent {
 
   rendDetailModal() {
     const { visible } = this.state;
+    const { topPayDetail } = this.props;
     return (
       <Modal
         visible={visible}
@@ -53,17 +62,40 @@ export default class MusicPlaylistPage extends React.PureComponent {
       >
         <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
           <WingBlank size="sm">
-            <Flex justify="start" onPress={()=> this.setState({visible: false})}>
-              <Flex.Item style={{flex: 0}}>
+            <Flex justify="start" onPress={() => this.setState({ visible: false })}>
+              <Flex.Item style={{ flex: 0 }}>
                 <Icon name="ios-arrow-back" size={16} />
               </Flex.Item>
-              <Flex.Item style={{paddingHorizontal: 8}}>
-                <Text style={{fontSize: 16}}>detail</Text>
+              <Flex.Item style={{ paddingHorizontal: 8 }}>
+                <Text style={{ fontSize: 16 }}>detail</Text>
               </Flex.Item>
             </Flex>
           </WingBlank>
+          {topPayDetail && (
+            <ScrollView
 
-          <Text style={{ textAlign: 'center' }}>detail</Text>
+            >
+              <List>
+                {Array.isArray(topPayDetail.tracks) &&
+                  topPayDetail.tracks.map((item, index) => {
+                    const itemProps = {
+                      key: index.toString(),
+                    }
+                    if(item.al && item.al.picUrl) {
+                      itemProps.thumb = item.al.picUrl;
+                    }
+                    return (
+                      <List.Item {...itemProps}
+                        extra={<Icon name="ios-play-circle"></Icon>}
+                      >
+                        <Text>{item.name}</Text>
+                      </List.Item>
+                    );
+                  })}
+              </List>
+              <Text style={{ textAlign: 'center' }}>{JSON.stringify(topPayDetail, null, 2)}</Text>
+            </ScrollView>
+          )}
         </View>
       </Modal>
     );
@@ -71,7 +103,11 @@ export default class MusicPlaylistPage extends React.PureComponent {
 
   render() {
     const { topPayList } = this.props;
-    const gridData = topPayList.map(item => ({ icon: item.coverImgUrl, text: item.name }));
+    const gridData = topPayList.map(item => ({
+      icon: item.coverImgUrl,
+      text: item.name,
+      id: item.id,
+    }));
     return (
       <View style={style.container}>
         <ScrollView>
