@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Grid, Modal, WingBlank, Flex, List } from 'antd-mobile-rn';
+import * as commonAction from './../../commonAction';
 import { connect } from '../../dva';
 
 @connect(state => {
@@ -36,6 +37,13 @@ export default class MusicPlaylistPage extends React.PureComponent {
         id,
       },
     });
+  };
+  handleDetailModalSongListItemClick = async (item) => {
+    const list = this.props.topPayDetail.tracks;
+    const { dispatch} = this.props;
+    console.log('....handleDetailModalSongListItemClick', item, list);
+    await commonAction.playerClearSongs(dispatch, list);
+    await commonAction.playerAddSongs(dispatch, list);
   };
   rendGridItem = (el, index) => {
     return (
@@ -72,22 +80,19 @@ export default class MusicPlaylistPage extends React.PureComponent {
             </Flex>
           </WingBlank>
           {topPayDetail && (
-            <ScrollView
-
-            >
+            <ScrollView>
               <List>
                 {Array.isArray(topPayDetail.tracks) &&
                   topPayDetail.tracks.map((item, index) => {
                     const itemProps = {
                       key: index.toString(),
-                    }
-                    if(item.al && item.al.picUrl) {
+                      onClick: () => this.handleDetailModalSongListItemClick(item),
+                    };
+                    if (item.al && item.al.picUrl) {
                       itemProps.thumb = item.al.picUrl;
                     }
                     return (
-                      <List.Item {...itemProps}
-                        extra={<Icon name="ios-play-circle"></Icon>}
-                      >
+                      <List.Item {...itemProps} extra={<Icon name="ios-play-circle" />}>
                         <Text>{item.name}</Text>
                       </List.Item>
                     );

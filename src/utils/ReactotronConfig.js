@@ -33,7 +33,7 @@ Reactotron.connect();
 Reactotron.clear();
 Reactotron.onCustomCommand('test', () => console.tron.log('This is an example'));
 
-global.console.log = Reactotron.log;
+// global.console.log = Reactotron.log;
 // global.console.error = Reactotron.error;
 // global.console.warn = Reactotron.warn;
 

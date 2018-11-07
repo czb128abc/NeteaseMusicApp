@@ -8,7 +8,7 @@ import {createLogger} from 'redux-logger';
 const dvaApp = dva({
   models: Object.values(dvaModels),
   onAction: createLogger({
-    collapsed: (getState, action, logEntry) => !logEntry.error,
+    collapsed: (getState, action, logEntry) => {return !logEntry.error},
     colors: {
       title: () => '',
       prevState: () => '',
