@@ -28,7 +28,11 @@
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
     "react-devtools": "^3.4.2",
-    "react-test-renderer": "16.6.0-alpha.8af6728"
+    "react-test-renderer": "16.6.0-alpha.8af6728",
+    "reactotron-react-native": "^2.1.0",
+    "reactotron-redux": "^2.1.0",
+    "reactotron-redux-saga": "^2.1.0",
+    "redux-logger": "^3.0.6"
   },
   "jest": {
     "preset": "react-native"
