@@ -45,6 +45,7 @@ export default class MusicPlaylistPage extends React.PureComponent {
     console.log('....handleDetailModalSongListItemClick', item, list);
     await commonAction.playerClearSongs(dispatch, list);
     await commonAction.playerAddSongs(dispatch, list);
+    await commonAction.playNewSong(dispatch, item);
   };
   rendGridItem = (el, index) => {
     return (

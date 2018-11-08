@@ -11,23 +11,23 @@ import { connect } from '../../dva';
   };
 })
 export default class NativeVideo extends React.PureComponent {
-  loadStart() {
-    console.log('loadStart')
-  }
-  setDuration() {
-    console.log('setDuration')
-  }
-  setTime() {
-    console.log('setTime')
-  }
-  onEnd() {
-    console.log('onEnd')
-  }
+  loadStart = () => {
+    console.log('loadStart');
+  };
+  setDuration = ({ duration }) => {
+    commonAction.setDurationTime(this.props.dispatch, duration);
+  };
+  setTime = ({ currentTime }) => {
+    commonAction.setCurrentTime(this.props.dispatch, currentTime);
+  };
+  onEnd = () => {
+    console.log('onEnd');
+  };
   videoError(e) {
-    console.log('videoError', e)
+    console.log('videoError', e);
   }
   render() {
-    const { currentPlayingSong } = this.props;
+    const { currentPlayingSong, playerIsPause } = this.props;
     if (!currentPlayingSong) {
       return null;
     }
@@ -39,7 +39,7 @@ export default class NativeVideo extends React.PureComponent {
         ref={ref => {
           this.player = ref;
         }} // Store reference
-        rate={1} // 控制暂停/播放，0 代表暂停paused, 1代表播放normal.
+        rate={playerIsPause ? 0 : 1} // 控制暂停/播放，0 代表暂停paused, 1代表播放normal.
         volume={1.0}
         // 声音的放声音的放大倍数大倍数，0 为静音  ，1 为正常音量 ，更大的数字表示放大的倍数
         muted={false} // true代表静音，默认为false.

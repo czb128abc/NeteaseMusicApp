@@ -15,22 +15,25 @@ const { Brief } = Item;
   };
 })
 export default class MusicPlayer extends React.PureComponent {
-  handleSongItemClick = (song) => {
-    const { dispatch } =this.props;
-    commonAction.playNewSong(dispatch, song)
+  handleSongItemClick = song => {
+    const { dispatch } = this.props;
+    commonAction.playNewSong(dispatch, song);
   };
 
   render() {
-    const { songList } = this.props;
+    const { songList, dispatch } = this.props;
     const gridData = songList;
     return (
       <View style={style.musicPlayerContainer}>
-        <View>
+        <View style={{height: 30}}>
           <Text>播放列表</Text>
+          <View style={style.playerContainer}>
+            <Text onPress={()=> commonAction.setPlayerIsPause(dispatch, false)}>播放</Text>
+            <Text onPress={()=> commonAction.setPlayerIsPause(dispatch, true)}>暂停</Text>
+          </View>
         </View>
-        <ScrollView 
-            style={{ maxHeight: 500 }}
-        >
+
+        <ScrollView style={{ maxHeight: 500 }}>
           <List>
             {Array.isArray(songList) &&
               songList.map((item, index) => {
@@ -51,9 +54,6 @@ export default class MusicPlayer extends React.PureComponent {
               })}
           </List>
         </ScrollView>
-        <View>
-          <Text>播放器</Text>
-        </View>
       </View>
     );
   }
@@ -71,5 +71,11 @@ const style = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     display: 'flex',
+    flex: 1,
+  },
+  playerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
