@@ -21,3 +21,11 @@ export function playerClearSongs(dispatch) {
     type: 'musicPlayer/playerClearSongs',
   });
 }
+
+
+export function playNewSong(dispatch, song) {
+  return dispatch({
+    type: 'musicPlayer/playNewSong',
+    payload: song,
+  });
+}

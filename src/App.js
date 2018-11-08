@@ -3,7 +3,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import { TabBar } from 'antd-mobile-rn';
 import { NativeRouter, Route } from 'react-router-native';
 import { MusicPlaylistPage } from './pages';
-
+import NativeVideo from './components/music-player/native-video';
 const TabBarItem = TabBar.Item;
 
 const tabBarMap = {
@@ -34,29 +34,36 @@ export default class AppView extends React.PureComponent<Props> {
   }
   render() {
     return (
-      <NativeRouter>
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#33A3F4"
-          barTintColor="white"
-          style={style.rootContainer}
-        >
-          {Object.keys(tabBarMap).map(item => {
-            const obj = tabBarMap[item];
-            const Com = obj.component;
-            return (
-              <TabBarItem
-                title={obj.title}
-                key={item}
-                selected={this.tabBarIsSelected(item)}
-                onPress={() => this.handleTabBarPress(item)}
-              >
-                {obj.path ? <Route path={item.path} component={Com} /> : <Text>{obj.content}</Text>}
-              </TabBarItem>
-            );
-          })}
-        </TabBar>
-      </NativeRouter>
+      <View style={{ flex: 1 }}>
+        <NativeRouter>
+          <TabBar
+            unselectedTintColor="#949494"
+            tintColor="#33A3F4"
+            barTintColor="white"
+            style={style.rootContainer}
+          >
+            {Object.keys(tabBarMap).map(item => {
+              const obj = tabBarMap[item];
+              const Com = obj.component;
+              return (
+                <TabBarItem
+                  title={obj.title}
+                  key={item}
+                  selected={this.tabBarIsSelected(item)}
+                  onPress={() => this.handleTabBarPress(item)}
+                >
+                  {obj.path ? (
+                    <Route path={item.path} component={Com} />
+                  ) : (
+                    <Text>{obj.content}</Text>
+                  )}
+                </TabBarItem>
+              );
+            })}
+          </TabBar>
+        </NativeRouter>
+        <NativeVideo />
+      </View>
     );
   }
 }

@@ -20,21 +20,9 @@ function checkStatus(response) {
  */
 async function request(url, options) {
   const response = await fetch(url, options);
-
   checkStatus(response);
-
   const data = await response.json();
-
-  const ret = {
-    data,
-    headers: {},
-  };
-
-  if (response.headers.get('x-total-count')) {
-    ret.headers['x-total-count'] = response.headers.get('x-total-count');
-  }
-  console.log(ret);
-  return ret;
+  return data;
 }
 
 export default request;

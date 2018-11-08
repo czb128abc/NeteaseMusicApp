@@ -18,7 +18,7 @@ export default {
   },
   effects: {
     *queryTopPayList({ payload }, { call, put }) {
-      const { data } = yield call(servies.queryTopPayList, payload);
+      const data = yield call(servies.queryTopPayList, payload);
       const { code, playlists, ...other } = data;
       if (code !== 200) {
         throw new Error(data.code);
@@ -43,7 +43,7 @@ export default {
           topPayDetail: null,
         },
       });
-      const { data } = yield call(servies.queryTopPayDetail, id);
+      const data = yield call(servies.queryTopPayDetail, id);
       const { code, playlist } = data;
       if (code !== 200) {
         throw new Error(data.code);

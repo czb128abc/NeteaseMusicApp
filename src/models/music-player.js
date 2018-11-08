@@ -1,7 +1,18 @@
+import * as servies from '../services/musicPlaylist';
+import { playModeEnum } from '../utils/music/consts';
+
+const songInfoCacheMap = {};
+
 export default {
   namespace: 'musicPlayer',
   state: {
     songList: [],
+    playMode: playModeEnum.SEQUENTIAL_PLAY,
+    currentPlayingKey: null,
+    currentPlayingSong: null,
+    currentTime: 0,
+    durationTime: 0,
+    playerIsPause: true,
   },
   reducers: {
     save(state, { payload }) {
@@ -37,5 +48,26 @@ export default {
       };
     },
   },
-  effects: {},
+  effects: {
+    *playNewSong(
+      {
+        payload: { id },
+      },
+      { call, put }
+    ) {
+      const { success, message, data } = yield call(servies.querySongInfo, id);
+      if (!success) {
+        throw new Error(message);
+      }
+      const currentPlayingKey = data.songKey;
+      const currentPlayingSong = data;
+      yield put({
+        type: 'save',
+        payload: {
+          currentPlayingSong,
+          currentPlayingKey,
+        },
+      });
+    },
+  },
 };

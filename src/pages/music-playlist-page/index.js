@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Grid, Modal, WingBlank, Flex, List } from 'antd-mobile-rn';
+import MusicPlayer from './../../components/music-player';
 import * as commonAction from './../../commonAction';
 import { connect } from '../../dva';
 
@@ -79,6 +80,7 @@ export default class MusicPlaylistPage extends React.PureComponent {
               </Flex.Item>
             </Flex>
           </WingBlank>
+          <MusicPlayer />
           {topPayDetail && (
             <ScrollView>
               <List>
@@ -98,7 +100,6 @@ export default class MusicPlaylistPage extends React.PureComponent {
                     );
                   })}
               </List>
-              <Text style={{ textAlign: 'center' }}>{JSON.stringify(topPayDetail, null, 2)}</Text>
             </ScrollView>
           )}
         </View>
