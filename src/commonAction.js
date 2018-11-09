@@ -24,8 +24,8 @@ export function playerClearSongs(dispatch) {
 
 /**
  * 播放歌曲
- * @param {*} dispatch 
- * @param {*} song 
+ * @param {*} dispatch
+ * @param {*} song
  */
 export async function playNewSong(dispatch, song) {
   setPlayerIsPause(dispatch, true);
@@ -37,32 +37,39 @@ export async function playNewSong(dispatch, song) {
   return result;
 }
 
-
 export function setDurationTime(dispatch, durationTime) {
   return dispatch({
     type: 'musicPlayer/save',
-    payload: {durationTime},
+    payload: { durationTime },
   });
 }
 
 export function setCurrentTime(dispatch, currentTime) {
   return dispatch({
     type: 'musicPlayer/save',
-    payload: {currentTime},
+    payload: { currentTime },
   });
 }
 export function setPlayerIsPause(dispatch, playerIsPause) {
   return dispatch({
     type: 'musicPlayer/save',
-    payload: {playerIsPause},
+    payload: { playerIsPause },
   });
 }
 
-// 根据规则播放下一首歌曲,
-export function playNextSomeSongByRule(dispatch) {
+/**
+ *  根据规则播放下一首歌曲, 
+  isNext= true; 下一首
+  isNext= false; 上一首
+ * @param {*} dispatch 
+ * @param {*} isNext 
+ */
+export function playNextSomeSongByRule(dispatch, isNext) {
   const song = '';
   return dispatch({
-    type: 'musicPlayer/playNewSong',
-    payload: song,
+    type: 'musicPlayer/playNextSomeSongByRule',
+    payload: {
+      isNext
+    },
   });
 }

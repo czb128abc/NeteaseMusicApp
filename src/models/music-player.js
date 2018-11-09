@@ -1,5 +1,5 @@
 import * as servies from '../services/musicPlaylist';
-import { playModeEnum } from '../utils/music/consts';
+import { playModeEnum, getSongInfoByStrategy } from '../utils/music/consts';
 
 const songInfoCacheMap = {};
 
@@ -7,7 +7,7 @@ export default {
   namespace: 'musicPlayer',
   state: {
     songList: [],
-    playMode: playModeEnum.SEQUENTIAL_PLAY,
+    playMode: playModeEnum.LOOP_PLAY,
     currentPlayingKey: null,
     currentPlayingSong: null,
     currentTime: 0,
@@ -68,6 +68,21 @@ export default {
           currentPlayingKey,
         },
       });
+    },
+    *playNextSomeSongByRule({ payload }, saga) {
+      console.log('...playNextSomeSongByRule');
+      const { isNext = true } = payload;
+      const { songList, playMode, currentPlayingKey } = yield saga.select(
+        state => state.musicPlayer
+      );
+      const nextSong = getSongInfoByStrategy[playMode](currentPlayingKey, songList, isNext);
+      console.log('nextSong', nextSong);
+      if (nextSong) {
+        yield saga.put({
+          type: 'playNewSong',
+          payload: nextSong,
+        });
+      }
     },
   },
 };
