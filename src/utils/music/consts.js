@@ -62,7 +62,7 @@ export const getSongInfoByStrategy = {
         return sIndex;
       })
       .filter((item, sIndex) => sIndex !== index);
-    const num = unPlayIndexList[randomNum(0, unPlayIndexList)];
+    const num = unPlayIndexList[randomNum(0, unPlayIndexList.length)];
     return songList[num];
   },
   [playModeEnum.SINGLE_TUNE_CIRCULATION](currentPlayingKey, songList) {
@@ -73,3 +73,9 @@ export const getSongInfoByStrategy = {
     return this[playModeEnum.SEQUENTIAL_PLAY](currentPlayingKey, songList, isNext);
   },
 };
+
+
+export function calTimePercent(currentTime, durationTime) {
+  const num =  ( currentTime * 100)/durationTime;
+  return num;
+}

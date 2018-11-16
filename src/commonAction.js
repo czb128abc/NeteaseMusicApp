@@ -56,6 +56,12 @@ export function setPlayerIsPause(dispatch, playerIsPause) {
     payload: { playerIsPause },
   });
 }
+export function setPlayMode(dispatch, playMode) {
+  return dispatch({
+    type: 'musicPlayer/save',
+    payload: { playMode },
+  });
+}
 
 /**
  *  根据规则播放下一首歌曲, 

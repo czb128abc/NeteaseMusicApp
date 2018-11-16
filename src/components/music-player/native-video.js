@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 import * as commonAction from './../../commonAction';
 import { connect } from '../../dva';
+import { playModeEnum } from '../../utils/music/consts';
 
 @connect(state => {
   const root = state.musicPlayer;
@@ -11,8 +12,22 @@ import { connect } from '../../dva';
   };
 })
 export default class NativeVideo extends React.PureComponent {
+
+  isLastSong () {
+    const { currentPlayingKey, songList } = this.props;
+    if(songList.length > 0) {
+      return `${songList[songList.length-1].id}` === currentPlayingKey;
+    }else {
+      return true;
+    }
+  }
+  playModeIsSequentialPlay () {
+    const { playMode } = this.props;
+    return playMode === playModeEnum.SEQUENTIAL_PLAY;
+  }
   loadStart = () => {
     console.log('loadStart');
+    commonAction.setPlayerIsPause(this.props.dispatch, false);
   };
   setDuration = ({ duration }) => {
     commonAction.setDurationTime(this.props.dispatch, duration);
@@ -22,6 +37,11 @@ export default class NativeVideo extends React.PureComponent {
   };
   onEnd = () => {
     console.log('onEnd');
+    if(!this.isLastSong() && this.playModeIsSequentialPlay()) {
+      commonAction.setPlayerIsPause(this.props.dispatch, true);
+    }else {
+      commonAction.playNextSomeSongByRule(this.props.dispatch, true);
+    }
   };
   videoError(e) {
     console.log('videoError', e);
@@ -66,5 +86,6 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+    display: 'none',
   },
 });

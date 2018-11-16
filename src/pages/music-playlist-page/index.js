@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Grid, Modal, WingBlank, Flex, List } from 'antd-mobile-rn';
+import { Grid, WingBlank, Flex, List } from 'antd-mobile-rn';
+// import Modal from 'react-native-root-modal';
 import MusicPlayer from './../../components/music-player';
 import * as commonAction from './../../commonAction';
 import { connect } from '../../dva';
@@ -39,9 +40,9 @@ export default class MusicPlaylistPage extends React.PureComponent {
       },
     });
   };
-  handleDetailModalSongListItemClick = async (item) => {
+  handleDetailModalSongListItemClick = async item => {
     const list = this.props.topPayDetail.tracks;
-    const { dispatch} = this.props;
+    const { dispatch } = this.props;
     console.log('....handleDetailModalSongListItemClick', item, list);
     await commonAction.playerClearSongs(dispatch, list);
     await commonAction.playerAddSongs(dispatch, list);
@@ -64,13 +65,8 @@ export default class MusicPlaylistPage extends React.PureComponent {
     const { visible } = this.state;
     const { topPayDetail } = this.props;
     return (
-      <Modal
-        visible={visible}
-        onClose={() => this.setState({ visible: false })}
-        animationType="slide"
-        closable
-      >
-        <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
+      <Modal visible={visible} onClose={() => this.setState({ visible: false })} closable>
+        <View style={{ paddingVertical: 20, paddingHorizontal: 20, display: 'flex' }}>
           <WingBlank size="sm">
             <Flex justify="start" onPress={() => this.setState({ visible: false })}>
               <Flex.Item style={{ flex: 0 }}>
@@ -81,7 +77,6 @@ export default class MusicPlaylistPage extends React.PureComponent {
               </Flex.Item>
             </Flex>
           </WingBlank>
-          <MusicPlayer />
           {topPayDetail && (
             <ScrollView>
               <List>
@@ -103,6 +98,7 @@ export default class MusicPlaylistPage extends React.PureComponent {
               </List>
             </ScrollView>
           )}
+          <MusicPlayer />
         </View>
       </Modal>
     );

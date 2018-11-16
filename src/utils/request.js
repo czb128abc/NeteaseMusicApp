@@ -27,7 +27,8 @@ async function request(url, options) {
 
 export default request;
 
-export const baseUrl = 'http://localhost:3000';
+// export const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'http://30.20.92.64:3000';
 
 export function get(funUrl, queryStrObj = {}) {
   const finalUrl = baseUrl + funUrl;
