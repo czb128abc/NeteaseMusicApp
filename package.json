@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "rm -rf ios/build/ && react-native run-ios --simulator 'iPhone 8'",
+    "ios": "rm -rf ios/build/ && react-native run-ios",
     "test": "jest",
     "devtools": "react-devtools"
   },
@@ -14,7 +14,7 @@
     "dva-core": "^1.4.0",
     "query-string": "^6.2.0",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.3",
+    "react-native": "^0.57.3",
     "react-native-root-modal": "^3.1.1",
     "react-native-vector-icons": "^6.0.2",
     "react-native-video": "^3.2.1",
