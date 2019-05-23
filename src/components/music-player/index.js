@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Toast, List } from 'antd-mobile-rn';
+import { Toast, List } from '@ant-design/react-native';
 import Icon from '../icon';
 import * as commonAction from './../../commonAction';
 import { connect } from '../../dva';
@@ -28,15 +28,15 @@ export default class MusicPlayer extends React.PureComponent {
     const { dispatch } = this.props;
     commonAction.playNewSong(dispatch, song);
   };
-  triggerMinView = (isMinView) => {
-    console.log('triggerMinView', isMinView)
+  triggerMinView = isMinView => {
+    console.log('triggerMinView', isMinView);
     this.setState({ isMinView: isMinView });
   };
   rendMiniView() {
     return (
       <View style={style.minViewContainer}>
-        <Text onPress={()=>this.triggerMinView(false)}>
-          <Icon  style={{ color: 'red' }} size={24} name="ios-play-circle" />
+        <Text onPress={() => this.triggerMinView(false)}>
+          <Icon style={{ color: 'red' }} size={24} name="ios-play-circle" />
         </Text>
       </View>
     );
@@ -61,11 +61,8 @@ export default class MusicPlayer extends React.PureComponent {
           }}
         >
           <Text>播放列表</Text>
-          <Text onPress={()=>this.triggerMinView(true)}>
-            <Icon
-              size={36}
-              name="ios-remove"
-            />
+          <Text onPress={() => this.triggerMinView(true)}>
+            <Icon size={36} name="ios-remove" />
           </Text>
         </View>
 

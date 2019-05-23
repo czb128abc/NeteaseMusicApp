@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
-import { Flex, Progress, WhiteSpace, WingBlank } from 'antd-mobile-rn';
+import { Flex, Progress, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import Icon from './../icon';
 import * as commonAction from './../../commonAction';
 import { calTimePercent, playModeEnum } from '../../utils/music/consts';
@@ -14,8 +14,8 @@ import { connect } from '../../dva';
 })
 export default class Player extends React.PureComponent {
   getCurrentSong() {
-    const {songList, currentPlayingKey} = this.props;
-    return songList.find(item=> `${item.id}` === currentPlayingKey)
+    const { songList, currentPlayingKey } = this.props;
+    return songList.find(item => `${item.id}` === currentPlayingKey);
   }
   render() {
     const { dispatch, currentTime, durationTime, playerIsPause } = this.props;
@@ -26,14 +26,13 @@ export default class Player extends React.PureComponent {
       <View style={{ flex: 1, height: 150 }}>
         <WhiteSpace size="lg" />
         <WingBlank>
-          {
-            song && (
-              <Text>{Array.isArray(song.ar) && song.ar.length>0 && `${song.ar[0].name} -- `}{song.name}</Text>
-            )
-          }
-          <Progress
-            percent={calTimePercent(currentTime, durationTime)}
-          />
+          {song && (
+            <Text>
+              {Array.isArray(song.ar) && song.ar.length > 0 && `${song.ar[0].name} -- `}
+              {song.name}
+            </Text>
+          )}
+          <Progress percent={calTimePercent(currentTime, durationTime)} />
         </WingBlank>
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />

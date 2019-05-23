@@ -1,11 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { TabBar } from 'antd-mobile-rn';
+import { TabBar } from '@ant-design/react-native';
 import { NativeRouter, Route } from 'react-router-native';
 import { MusicPlaylistPage } from './pages';
 import NativeVideo from './components/music-player/native-video';
-const TabBarItem = TabBar.Item;
-
 const tabBarMap = {
   key_0: {
     title: '推荐音乐',
@@ -13,13 +11,13 @@ const tabBarMap = {
     path: '/music-playlist',
     component: MusicPlaylistPage,
   },
-  // key_1: {
-  //   title: '我的音乐',
-  //   content: '我的音乐',
-  // },
+
+  key_1: {
+    title: '我的音乐',
+    content: '我的音乐',
+  },
 };
-type Props = {};
-export default class AppView extends React.PureComponent<Props> {
+export default class AppView extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +44,7 @@ export default class AppView extends React.PureComponent<Props> {
               const obj = tabBarMap[item];
               const Com = obj.component;
               return (
-                <TabBarItem
+                <TabBar.Item
                   title={obj.title}
                   key={item}
                   selected={this.tabBarIsSelected(item)}
@@ -57,12 +55,13 @@ export default class AppView extends React.PureComponent<Props> {
                   ) : (
                     <Text>{obj.content}</Text>
                   )}
-                </TabBarItem>
+                </TabBar.Item>
               );
             })}
           </TabBar>
         </NativeRouter>
         <NativeVideo />
+        <MusicPlaylistPage />
       </View>
     );
   }
